@@ -1,13 +1,10 @@
-# spring_using_azure_replicas
-In this project, I implement Master-Slave or Primary-Replicas Model into Spring Boot. In this model, all writes and updates happen in master Database; whereas, read operations are distributed across replicas database. This model improves  performance because it allows more queries to be processed in parallel.
+# Azure-SQL-Managed-Instance-and-Failover-Replicas-implemented-with-Spring-Boot
+In this project, I implement Master-Slave or Primary-Replicas Model into Spring Boot. In this model, all writes and updates happen in master Database; whereas, read operations are distributed across replicas database. This model improves  performance because it allows more queries to be processed in parallel. 2 Managed Databases are hosted on 2 SQL Managed Instance
 
-![Replica](https://user-images.githubusercontent.com/36349293/193421538-24ba9f66-44a9-4361-89d5-9e6587e2666e.jpeg)
+<img width="864" alt="Picture1" src="https://user-images.githubusercontent.com/36349293/194906441-9a21652e-8738-4202-8bbd-9ff1218e763a.png">
 
 
-### 1. Please follow this guide to create your Azure Database and it's replicas:
-https://learn.microsoft.com/en-us/azure/mysql/single-server/how-to-read-replicas-portal
-
-### 2. After creating Database and it's replica, create a example table:
+### 1. After creating Database inside your Primary SQL Managed Instance, create a example table:
 
 ```sql
 CREATE TABLE person(
@@ -16,10 +13,19 @@ CREATE TABLE person(
 )
 ```
 
-### 3. Please follow this guide to connect Spring Boot to Azure Database:
+### 2. Next, please follow this guide to setup Secondary SQL Managed Instance for your original database on SQL Managed Instance
+https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/failover-group-add-instance-tutorial?view=azuresql&tabs=azure-portal
+
+
+### 3. Please follow this guide to open public endpoint for your SQL Managed Instance:
+https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/public-endpoint-configure?view=azuresql
+
+
+### 4. Please follow this guide to connect Spring Boot to SQL Managed Instance Using Connection String:
 https://learn.microsoft.com/en-us/azure/developer/java/spring-framework/configure-spring-data-jdbc-with-azure-sql-server
 
-### 4. Get connection string from Azure Portal and connect to 2 datasources in application.properties file:
+
+### 4. Get connection string from 2 SQL Managed Instance and connect to 2 datasources in application.properties file:
 ```properties
 #AZURE PRIMARY DATASOURCE
 spring.datasource.jdbc-url=...
